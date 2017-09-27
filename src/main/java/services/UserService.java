@@ -4,8 +4,7 @@ import data.User;
 import db.TransactionDao;
 import db.UserDao;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import util.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -24,7 +23,7 @@ import javax.ws.rs.core.Response;
 @Path("user")
 public class UserService {
     
-    private static final Logger log = Logger.getLogger(UserService.class.getName());
+    private static final Logger log = Logger.getLogger();
 
     private UserDao userDao = new UserDao();
     private TransactionDao transactionDao = new TransactionDao();
@@ -40,7 +39,7 @@ public class UserService {
             userDao.updateUser(user);
             log.info("Updated user!");        
         } catch(SQLException e) {
-            log.log(Level.SEVERE, "Failed to update user", e);        
+            log.error("Failed to update user", e);
             throw new ServerErrorException("Failed to update user", Response.Status.INTERNAL_SERVER_ERROR, e);
         }
     }
@@ -52,7 +51,7 @@ public class UserService {
         try {
             return userDao.getUser(currentUserEmail);
         } catch(SQLException e) {
-            log.log(Level.SEVERE, "Failed to get user", e);        
+            log.error("Failed to get user", e);
             throw new ServerErrorException("Failed to get user", Response.Status.INTERNAL_SERVER_ERROR, e);
         }
     }

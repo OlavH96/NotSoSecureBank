@@ -5,14 +5,14 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Logger;
+import util.Logger;
 
 /**
  * @author nilstes
  */
 public class UserDao {
     
-    private static final Logger log = Logger.getLogger(UserDao.class.getName());
+    private static final Logger log = Logger.getLogger();
 
     public User getUser(String email) throws SQLException {
         Connection connection = Db.instance().getConnection();

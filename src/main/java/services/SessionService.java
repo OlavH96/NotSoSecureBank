@@ -8,8 +8,7 @@ import db.TransactionDao;
 import db.UserDao;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import util.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -30,7 +29,7 @@ import javax.ws.rs.core.Response;
 @Path("session")
 public class SessionService {
     
-    private static final Logger log = Logger.getLogger(SessionService.class.getName());
+    private static final Logger log = Logger.getLogger();
 
     private UserDao userDao = new UserDao();
     private TransactionDao transactionDao = new TransactionDao();
@@ -57,7 +56,7 @@ public class SessionService {
                 }
             }
         } catch(SQLException e) {
-            log.log(Level.SEVERE, "Failed to check or register user", e);        
+            log.error("Failed to check or register user", e);
             throw new ServerErrorException("DB error", Response.Status.INTERNAL_SERVER_ERROR, e);
         }
         Session session = new Session();

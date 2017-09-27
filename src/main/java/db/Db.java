@@ -1,11 +1,12 @@
 package db;
 
+import util.MethodTimer;
+
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import util.Logger;
 
 /**
  * Singleton for DB creation and connection creation
@@ -13,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class Db {
 
-    private static final Logger log = Logger.getLogger(Db.class.getName());
+    private static final Logger log = Logger.getLogger();
     private static final String DB_NAME = "notsosecurebank";
     private static Db instance = new Db();
     
@@ -31,7 +32,7 @@ public class Db {
             }
             log.info("DB initialized!");
         } catch (Exception exception) {
-            log.log(Level.SEVERE, "Failed to start DB", exception);
+            log.error("Failed to start DB", exception);
         }
     }
     
@@ -42,6 +43,8 @@ public class Db {
     Connection getConnection() throws SQLException {
         // todo FIXME This is not a good way to get connections
         // Use a pool instead
-        return DriverManager.getConnection("jdbc:h2:~/" + DB_NAME, DB_NAME, "");
+        try (MethodTimer timer = new MethodTimer(Db.class, "getConnection")) {
+            return DriverManager.getConnection("jdbc:h2:~/" + DB_NAME, DB_NAME, "");
+        }
     }
 }

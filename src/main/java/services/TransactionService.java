@@ -6,8 +6,7 @@ import db.TransactionDao;
 import db.UserDao;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import util.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -27,7 +26,7 @@ import javax.ws.rs.core.Response;
 @Path("user/{email}/transaction")
 public class TransactionService {
     
-    private static final Logger log = Logger.getLogger(TransactionService.class.getName());
+    private static final Logger log = Logger.getLogger();
 
     private UserDao userDao = new UserDao();
     private TransactionDao transactionDao = new TransactionDao();
@@ -49,7 +48,7 @@ public class TransactionService {
             transactionDao.addTransaction(transaction);
             log.info("Added transaction!");        
         } catch(SQLException e) {
-            log.log(Level.SEVERE, "Failed to add transaction", e);        
+            log.error("Failed to add transaction", e);
             throw new ServerErrorException("Failed to add transaction", Response.Status.INTERNAL_SERVER_ERROR, e);
         }
     }
@@ -67,7 +66,7 @@ public class TransactionService {
         try {
             return transactionDao.getTransactions(currentUserEmail);
         } catch(SQLException e) {
-            log.log(Level.SEVERE, "Failed to read user transactions", e);        
+            log.error("Failed to read user transactions", e);
             throw new ServerErrorException("Failed to read user transactions", Response.Status.INTERNAL_SERVER_ERROR, e);
         }
     }
