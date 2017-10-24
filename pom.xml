@@ -93,9 +93,6 @@
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <!-- or if you want to use tomcat 6.x
-                <artifactId>tomcat6-maven-plugin</artifactId>
-                -->
                 <version>2.2</version>
                 <executions>
                     <execution>
@@ -104,8 +101,17 @@
                             <goal>run-war-only</goal>
                         </goals>
                         <phase>pre-integration-test</phase>
-                        <configuration>                    
-                            <fork>true</fork>                    
+                        <configuration>
+                            <fork>true</fork>
+                            <systemProperties>
+                                <CATALINA_OPTS>-Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false</CATALINA_OPTS>-->
+
+                        <!--            <com.sun.management.jmxremote>true</com.sun.management.jmxremote>
+                                    <com.sun.management.jmxremote.port>9090</com.sun.management.jmxremote.port>
+                                    <com.sun.management.jmxremote.authenticate>false</com.sun.management.jmxremote.authenticate>
+                                    <com.sun.management.jmxremote.ssl>false</com.sun.management.jmxremote.ssl>
+                                    <java.rmi.server.hostname>10.50.82.143</java.rmi.server.hostname> -->
+                            </systemProperties>
                         </configuration>
                     </execution>
                     <execution>
