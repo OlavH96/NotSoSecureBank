@@ -1,0 +1,11 @@
+
+Stress Test
+
+Time Out mot 5k, ikke ved 2k
+
+Spike test
+    Øvre gense: Begynner å time ut mot 1k brukere
+    Får Connection Timed Out
+
+VisualVM
+    Gjorde at noen timet ut som ikke gjorde det uten

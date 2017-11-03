@@ -21,3 +21,4 @@ function getLoggedOnUser(success) {
         }
     });
 };
+
